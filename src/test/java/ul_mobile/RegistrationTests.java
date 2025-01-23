@@ -1,10 +1,15 @@
 package ul_mobile;
 
 import config.AppiumConfig;
+import dto.UserDTO;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
+import screens.RegistrationScreen;
 import screens.SearchScreen;
 import screens.SplashScreen;
+import static helper.RandomUtils.*;
+
 
 public class RegistrationTests extends AppiumConfig {
 
@@ -16,7 +21,19 @@ public class RegistrationTests extends AppiumConfig {
 
     }
     @Test
-    public void RegistrationPositiveTests(){
+    public void registrationPositiveTests(){
+        UserDTO user = UserDTO.builder()
+
+                .firstName(generateString(5))
+                .lastName(generateString(10))
+                .username(generateEmail(10))
+                .password("Novigod123!")
+                .build();
+        RegistrationScreen registrationScreen = new RegistrationScreen(driver);
+        registrationScreen.typeRegistrationForm(user);
+        Assert.assertTrue(registrationScreen.validateMessageSuccess("Registration success!"));
+
+
 
     }
 }
